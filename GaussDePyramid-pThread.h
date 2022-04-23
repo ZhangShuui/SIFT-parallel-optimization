@@ -1,24 +1,27 @@
 //
-// Created by zsr on 2022/4/17.
+// Created by zsr on 2022/4/23.
 //
 
-#ifndef SIFT_GUASS_NORMAL_GUASSDEPYRAMID_H
-#define SIFT_GUASS_NORMAL_GUASSDEPYRAMID_H
+#ifndef SIFT_GUASS_NORMAL_GAUSSDEPYRAMID_PTHREAD_H
+#define SIFT_GUASS_NORMAL_GAUSSDEPYRAMID_PTHREAD_H
+#include <iostream>
+//
+// Created by zsr on 2022/4/17.
+//
 const double sigma = 2.0;
 const double PI = 3.1414926;
 #include <iostream>
 #include <math.h>
-class GaussPyramid{
+class GaussPyramid_p{
 public:
     int** data; //记录图像灰度数据
-    GaussPyramid();
-    GaussPyramid(int** img, int len/*,int wid*/, int S);
+    GaussPyramid_p();
+    GaussPyramid_p(int** img, int len/*,int wid*/, int S);
     double**** GaussPy;
     void GaussPyInit();
     void output();
     void GaussFilter(int theLayer);
     void GenerateDoG();
-    ~GaussPyramid();
 protected:
     int length;
     //int width;  先尝试宽度相同的版本
@@ -27,11 +30,11 @@ protected:
     double* filter;
 };
 
-GaussPyramid::GaussPyramid() {
+GaussPyramid_p::GaussPyramid_p() {
     data= nullptr;
 }
 
-GaussPyramid::GaussPyramid(int **img, int len, int S) {
+GaussPyramid_p::GaussPyramid_p(int **img, int len, int S) {
     length=len;
     data= new int*[len];
     for (int i = 0; i < len; ++i) {
@@ -54,7 +57,7 @@ GaussPyramid::GaussPyramid(int **img, int len, int S) {
     GaussPyInit();
 }
 //初始化高斯金字塔，尚未进行高斯滤波操作
-void GaussPyramid::GaussPyInit() {
+void GaussPyramid_p::GaussPyInit() {
     int step=1;
     for (int i = 0; i < layer; ++i) {
         GaussPy[i]=new double**[S+3];
@@ -81,7 +84,7 @@ void GaussPyramid::GaussPyInit() {
     }
 }
 
-void GaussPyramid::output() {
+void GaussPyramid_p::output() {
     int len=length;
     for (int i = 0; i < layer; ++i) {
         for (int j = 0; j < len; ++j) {
@@ -98,7 +101,7 @@ void GaussPyramid::output() {
     }
 }
 
-void GaussPyramid::GaussFilter(int theLayer) {//采用双边滤波
+void GaussPyramid_p::GaussFilter(int theLayer) {//采用双边滤波
     double len=length;
     int t=theLayer;
     while (theLayer!=0){
@@ -128,7 +131,7 @@ void GaussPyramid::GaussFilter(int theLayer) {//采用双边滤波
 
 }
 
-void GaussPyramid::GenerateDoG() {
+void GaussPyramid_p::GenerateDoG() {
     int len=length;
     for (int i = 0; i < layer; ++i) {
         GaussFilter(i);
@@ -143,26 +146,6 @@ void GaussPyramid::GenerateDoG() {
     }
 }
 
-GaussPyramid::~GaussPyramid() {
-    int step=1;
-    for (int i = 0; i < layer; ++i) {
-        for (int j = 0; j < S + 3; ++j) {
-            for (int k = 0; k < length/step; ++k) {
-                delete []GaussPy[i][j][k];
-            }
-        }
-        step*=2;
-    }
-    for (int i = 0; i < layer; ++i) {
-        for (int j = 0; j < S + 3; ++j) {
-            delete []GaussPy[i][j];
-        }
-    }
-    for (int i = 0; i < layer; ++i) {
-        delete []GaussPy[i];
-    }
-    delete []GaussPy;
-}
 
 
-#endif //SIFT_GUASS_NORMAL_GUASSDEPYRAMID_H
+#endif //SIFT_GUASS_NORMAL_GAUSSDEPYRAMID_PTHREAD_H
