@@ -80,6 +80,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-NEON.h">
+			<Option target="SIFT_Guass_normal"/>
+		</Unit>
 		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-pThread.h">
 			<Option target="SIFT_Guass_normal"/>
 		</Unit>

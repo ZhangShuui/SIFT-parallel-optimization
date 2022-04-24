@@ -1,6 +1,7 @@
 #include <iostream>
 #include "GuassDePyramid.h"
 #include "GaussDePyramid-pThread.h"
+#include "GaussDePyramid-NEON.h"
 #include <sys/time.h>
 using namespace std;
 const int MAX=4096;
@@ -16,20 +17,17 @@ int main() {
             p[i][j]=1;
         }
     }
-    GaussPyramid gaussPyramidP(p,n,2);
-    gaussPyramidP.GenerateDoG();
-    gaussPyramidP.output();
-//    for (int n = 32; n <= MAX; n*=2) {
-//        int count=0;
-//        gettimeofday(&start,NULL);
-//        gettimeofday(&final,NULL);
-//        while (final.tv_sec-start.tv_sec<5.0){
-//            count++;
-//            GaussPyramid g(p, n, 2);
-//            g.GenerateDoG();
-//            gettimeofday(&final,NULL);
-//        }
-//        cout<<n<<","<<(final.tv_sec-start.tv_sec)/(count)<<endl;
-//    }
+    for (int n = 32; n <= MAX; n*=2) {
+        int count=0;
+        gettimeofday(&start,NULL);
+        gettimeofday(&final,NULL);
+        while (final.tv_sec-start.tv_sec<10.0){
+            count++;
+            GaussPyramid_p g(p, n, 2);
+            g.GenerateDoG();
+            gettimeofday(&final,NULL);
+        }
+        cout<<n<<","<<(final.tv_sec-start.tv_sec)/double (count)<<endl;
+    }
     return 0;
 }

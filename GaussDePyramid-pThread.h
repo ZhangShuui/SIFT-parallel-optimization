@@ -8,8 +8,8 @@
 //
 // Created by zsr on 2022/4/17.
 //
-//const double sigma = 2.0;
-//const double PI = 3.1414926;
+//const float sigma = 2.0;
+//const float PI = 3.1414926;
 #include <iostream>
 #include <math.h>
 #include <pthread.h>
@@ -26,7 +26,7 @@ public:
     int** data; //记录图像灰度数据
     GaussPyramid_p();
     GaussPyramid_p(int** img, int len/*,int wid*/, int S);
-    double**** GaussPy;
+    float**** GaussPy;
     void GaussPyInit();
     void output();
     void GaussFilter(int theLayer);
@@ -38,7 +38,7 @@ protected:
     //int width;  先尝试宽度相同的版本
     int S;  //提取图像特征后,需要进行对比的图片数
     int layer;
-    double* filter;
+    float* filter;
 };
 
 GaussPyramid_p::GaussPyramid_p() {
@@ -63,19 +63,19 @@ GaussPyramid_p::GaussPyramid_p(int **img, int len, int S) {
         len/=2;
     }
     layer=x;
-    GaussPy=new double***[layer];
-    filter=new double[length];
+    GaussPy=new float***[layer];
+    filter=new float[length];
     GaussPyInit();
 }
 //初始化高斯金字塔，尚未进行高斯滤波操作
 void GaussPyramid_p::GaussPyInit() {
     int step=1;
     for (int i = 0; i < layer; ++i) {
-        GaussPy[i]=new double**[S+3];
+        GaussPy[i]=new float**[S+3];
         for (int j = 0; j < S + 3; ++j) {
-            GaussPy[i][j]=new double*[length/step];
+            GaussPy[i][j]=new float*[length/step];
             for (int k = 0; k < length/step; ++k) {
-                GaussPy[i][j][k]=new double [length/step];
+                GaussPy[i][j][k]=new float [length/step];
             }
         }
         step*=2;
@@ -113,7 +113,7 @@ void GaussPyramid_p::output() {
 }
 
 void GaussPyramid_p::GaussFilter(int theLayer) {//采用双边滤波
-    double len=length;
+    float len=length;
     int t=theLayer;
     while (theLayer!=0){
         theLayer--;
@@ -124,7 +124,7 @@ void GaussPyramid_p::GaussFilter(int theLayer) {//采用双边滤波
     len=(len-1)/2;
 
     for (int i = 0; i < S + 3; ++i) {
-        double sig=sigma/(i+1);
+        float sig=sigma/(i+1);
         for (int i = 0; i < MyLen; ++i) {
             filter[i] = exp(-(i-len)*(i-len)/(2*sig*sig))/(sigma*sqrt(2*PI));
         }
@@ -182,7 +182,7 @@ void *GaussPyramid_p::thread_Filter_Sub(void *param) {
     GaussPyramid_p* self=p->self;
     int layer=self->layer;
     int length=self->length;
-    double**** GaussPy=self->GaussPy;
+    float**** GaussPy=self->GaussPy;
     int S=self->S;
     int MyLayer=p->theLayer;
     for (int i = MyLayer; i < layer; i+=THREAD_COUNT) {
@@ -191,10 +191,10 @@ void *GaussPyramid_p::thread_Filter_Sub(void *param) {
         while (k--){
             len/=2;
         }
-        double* fil=new double [len];
-        double l=double (len-1)/2.0;
+        float* fil=new float [len];
+        float l=float (len-1)/2.0;
         for (int i = 0; i < S + 3; ++i) {
-            double sig=sigma/(i+1);
+            float sig=sigma/(i+1);
             for (int i = 0; i < len; ++i) {
                 fil[i] = exp(-(i-l)*(i-l)/(2*sig*sig))/(sigma*sqrt(2*PI));
             }
