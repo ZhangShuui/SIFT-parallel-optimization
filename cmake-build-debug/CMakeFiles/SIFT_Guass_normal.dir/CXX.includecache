@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-pThread.h
+iostream
+-
+math.h
+-
+pthread.h
+-
+
 C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GuassDePyramid.h
 iostream
 -
@@ -17,6 +25,8 @@ iostream
 -
 GuassDePyramid.h
 C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GuassDePyramid.h
+GaussDePyramid-pThread.h
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-pThread.h
 sys/time.h
 -
 
