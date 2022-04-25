@@ -112,7 +112,7 @@ void GaussPyramid::GaussFilter(int theLayer) {//采用双边滤波
     for (int i = 0; i < S + 3; ++i) {
         float sig=sigma/(i+1);
         for (int i = 0; i < MyLen; ++i) {
-            filter[i] = exp(-(i-len)*(i-len)/(2*sig*sig))/(sigma*sqrt(2*PI));
+            filter[i] = exp(-(i-len)*(i-len)/(2*sig*sig))/(sig*sqrt(2*PI));
         }
         for (int j = 0; j < MyLen; ++j) {
             for (int k = 0; k < MyLen; ++k) {

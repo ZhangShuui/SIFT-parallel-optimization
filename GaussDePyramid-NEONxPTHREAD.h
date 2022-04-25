@@ -1,37 +1,33 @@
 //
-// Created by zsr on 2022/4/23.
+// Created by zsr on 2022/4/24.
 //
 
-#ifndef SIFT_GUASS_NORMAL_GAUSSDEPYRAMID_PTHREAD_H
-#define SIFT_GUASS_NORMAL_GAUSSDEPYRAMID_PTHREAD_H
-#define THREAD_COUNT 7
-//
-// Created by zsr on 2022/4/17.
-//
-//const float sigma = 2.0;
-//const float PI = 3.1414926;
+#ifndef SIFT_GUASS_NORMAL_GAUSSDEPYRAMID_NEONXPTHREAD_H
+#define SIFT_GUASS_NORMAL_GAUSSDEPYRAMID_NEONXPTHREAD_H
+#define THREAD_COUNT_nt 7
 #include <iostream>
 #include <math.h>
+#include <arm_neon.h>
 #include <pthread.h>
-class GaussPyramid_p;
-struct ThreadParam_t{
-    GaussPyramid_p* self;
+class GaussPyramid_nxp;
+struct ThreadParam_nt{
+    GaussPyramid_nxp* self;
     int theLayer;//记录层数
 };//用在高斯金字塔同层间相减的参数
 
 
-class GaussPyramid_p{
+class GaussPyramid_nxp{
 public:
     pthread_barrier_t barrier_Division;
     int** data; //记录图像灰度数据
-    GaussPyramid_p();
-    GaussPyramid_p(int** img, int len/*,int wid*/, int S);
+    GaussPyramid_nxp();
+    GaussPyramid_nxp(int** img, int len/*,int wid*/, int S);
     float**** GaussPy;
     void GaussPyInit();
     void output();
     void GaussFilter(int theLayer);
     void GenerateDoG();
-    ~GaussPyramid_p();
+    ~GaussPyramid_nxp();
     static void* thread_Filter_Sub(void *param);
 protected:
     int length;
@@ -41,11 +37,11 @@ protected:
     float* filter;
 };
 
-GaussPyramid_p::GaussPyramid_p() {
+GaussPyramid_nxp::GaussPyramid_nxp() {
     data= nullptr;
 }
 
-GaussPyramid_p::GaussPyramid_p(int **img, int len, int S) {
+GaussPyramid_nxp::GaussPyramid_nxp(int **img, int len, int S) {
     length=len;
     data= new int*[len];
     for (int i = 0; i < len; ++i) {
@@ -68,7 +64,7 @@ GaussPyramid_p::GaussPyramid_p(int **img, int len, int S) {
     GaussPyInit();
 }
 //初始化高斯金字塔，尚未进行高斯滤波操作
-void GaussPyramid_p::GaussPyInit() {
+void GaussPyramid_nxp::GaussPyInit() {
     int step=1;
     for (int i = 0; i < layer; ++i) {
         GaussPy[i]=new float**[S+3];
@@ -95,7 +91,7 @@ void GaussPyramid_p::GaussPyInit() {
     }
 }
 
-void GaussPyramid_p::output() {
+void GaussPyramid_nxp::output() {
     int len=length;
     for (int i = 0; i < layer; ++i) {
         for (int j = 0; j < len; ++j) {
@@ -112,7 +108,7 @@ void GaussPyramid_p::output() {
     }
 }
 
-void GaussPyramid_p::GaussFilter(int theLayer) {//采用双边滤波
+void GaussPyramid_nxp::GaussFilter(int theLayer) {//采用双边滤波
     float len=length;
     int t=theLayer;
     while (theLayer!=0){
@@ -142,21 +138,21 @@ void GaussPyramid_p::GaussFilter(int theLayer) {//采用双边滤波
 
 }
 
-void GaussPyramid_p::GenerateDoG() {
-    pthread_barrier_init(&barrier_Division,NULL,THREAD_COUNT);
-    pthread_t handles[THREAD_COUNT];
-    ThreadParam_t paras[THREAD_COUNT];
-    for (int i = 0; i < THREAD_COUNT; ++i) {
+void GaussPyramid_nxp::GenerateDoG() {
+    pthread_barrier_init(&barrier_Division,NULL,THREAD_COUNT_nt);
+    pthread_t handles[THREAD_COUNT_nt];
+    ThreadParam_nt paras[THREAD_COUNT_nt];
+    for (int i = 0; i < THREAD_COUNT_nt; ++i) {
         paras[i]={this,i};
         pthread_create(handles+i,NULL, thread_Filter_Sub,paras+i);
     }
-    for (int i = 0; i < THREAD_COUNT; ++i) {
+    for (int i = 0; i < THREAD_COUNT_nt; ++i) {
         pthread_join(handles[i], nullptr);
     }
     pthread_barrier_destroy(&barrier_Division);
 }
 
-GaussPyramid_p::~GaussPyramid_p() {
+GaussPyramid_nxp::~GaussPyramid_nxp() {
     int step=1;
     for (int i = 0; i < layer; ++i) {
         for (int j = 0; j < S + 3; ++j) {
@@ -177,50 +173,93 @@ GaussPyramid_p::~GaussPyramid_p() {
     delete []GaussPy;
 }
 
-void *GaussPyramid_p::thread_Filter_Sub(void *param) {
-    ThreadParam_t * p=(ThreadParam_t *) param;
-    GaussPyramid_p* self=p->self;
+void *GaussPyramid_nxp::thread_Filter_Sub(void *param) {
+    ThreadParam_nt * p=(ThreadParam_nt *) param;
+    GaussPyramid_nxp* self=p->self;
     int layer=self->layer;
     int length=self->length;
     float**** GaussPy=self->GaussPy;
     int S=self->S;
     int MyLayer=p->theLayer;
-    for (int i = MyLayer; i < layer; i+=THREAD_COUNT) {
+    float* fil =new float[length];
+    for (int i = MyLayer; i < layer; i+=THREAD_COUNT_nt) {
         int len=length;
         int k=i;
         while (k--){
             len/=2;
         }
-        float* fil=new float [len];
-        float l=float (len-1)/2.0;
-        for (int i = 0; i < S + 3; ++i) {
-            float sig=sigma/(i+1);
-            for (int i = 0; i < len; ++i) {
-                fil[i] = exp(-(i-l)*(i-l)/(2*sig*sig))/(sig*sqrt(2*PI));
-            }
-            for (int j = 0; j < len; ++j) {
-                for (int k = 0; k < len; ++k) {
-                    GaussPy[MyLayer][i][j][k]*=fil[k];
+        if (len<=2){
+            float l=float (len-1)/2.0;
+            for (int mm = 0; mm < S + 3; ++mm) {
+                float sig=sigma/float (mm + 1);
+                for (int kk = 0; kk < len; ++kk) {
+                    fil[kk] = exp(-(float (kk) - l) * (float (kk) - l) / (2 * sig * sig)) / (sig * sqrt(2 * PI));
+                }
+                for (int j = 0; j < len; ++j) {
+                    for (int kk = 0; kk < len; ++kk) {
+                        GaussPy[i][mm][j][kk]*=fil[kk];
+                    }
+                }
+                for (int j = 0; j < len; ++j) {
+                    for (int kk = 0; kk < len; ++kk) {
+                        GaussPy[i][mm][kk][j]*=fil[kk];
+                    }
                 }
             }
-            for (int j = 0; j < len; ++j) {
-                for (int k = 0; k < len; ++k) {
-                    GaussPy[MyLayer][i][k][j]*=fil[k];
+            for (int j = 0; j < S + 2; ++j) {
+                for (int kk = 0; kk < len; ++kk) {
+                    for (int ll = 0; ll < len; ++ll) {
+                        GaussPy[i][j][kk][ll]-=GaussPy[i][j + 1][kk][ll];
+                    }
+                }
+            }
+        } else {
+            float32x4_t vf,va;
+            float l=float (len-1)/2.0;
+            for (int m = 0; m < S + 3; ++m) {
+                float sig=sigma/(m+1);
+                for (int kk= 0; kk < len; ++kk) {
+                    fil[kk] = exp(-(kk - l) * (kk - l) / (2 * sig * sig)) / (sig * sqrt(2 * PI));
+                }
+                for (int j = 0; j < len; j+=4) {
+                    vf = vld1q_f32(fil+j);
+                    for (int kk = 0; kk < len; ++kk) {
+                        va = vld1q_f32(GaussPy[i][m][kk] + j);
+                        va = vmulq_f32(va,vf);
+                        vst1q_f32(GaussPy[i][m][kk] + j, va);
+                    }
+                }
+                for (int j = 0; j < len; j++) {
+                    vf = vld1q_dup_f32(fil+j);
+                    for (int kk = 0; kk < len; kk+=4) {
+                        va = vld1q_f32(GaussPy[i][m][j] + kk);
+                        va = vmulq_f32(va,vf);
+                        vst1q_f32(GaussPy[i][m][j] + kk, va);
+                    }
+                }
+            }
+            for (int j = 0; j < S + 2; ++j) {
+                for (int kk = 0; kk < len; ++kk) {
+                    for (int ll = 0; ll < len; ll+=4) {
+                        va = vld1q_f32(GaussPy[i][j][kk] + ll);
+                        vf = vld1q_f32(GaussPy[i][j+1][kk] + ll);
+                        va = vsubq_f32(va,vf);
+                        vst1q_f32(GaussPy[i][j][kk] + ll, va);
+                    }
                 }
             }
         }
-        for (int i = 0; i < S + 2; ++i) {
-            for (int j = 0; j < len; ++j) {
-                for (int l = 0; l < len; ++l) {
-                    GaussPy[MyLayer][i][j][l]-=GaussPy[MyLayer][i+1][j][l];
-                }
-            }
-        }
-        delete []fil;
     }
+    delete []fil;
     pthread_barrier_wait(&self->barrier_Division);
+    self= nullptr;
+    GaussPy= nullptr;
+    p= nullptr;
     pthread_exit(NULL);
 }
 
 
-#endif //SIFT_GUASS_NORMAL_GAUSSDEPYRAMID_PTHREAD_H
+
+
+
+#endif //SIFT_GUASS_NORMAL_GAUSSDEPYRAMID_NEONXPTHREAD_H

@@ -2,6 +2,7 @@
 #include "GuassDePyramid.h"
 #include "GaussDePyramid-pThread.h"
 #include "GaussDePyramid-NEON.h"
+#include "GaussDePyramid-NEONxPTHREAD.h"
 #include <sys/time.h>
 using namespace std;
 const int MAX=4096;
@@ -23,11 +24,14 @@ int main() {
         gettimeofday(&final,NULL);
         while (final.tv_sec-start.tv_sec<10.0){
             count++;
-            GaussPyramid_p g(p, n, 2);
+            GaussPyramid_nxp g(p, n, 2);
             g.GenerateDoG();
             gettimeofday(&final,NULL);
         }
         cout<<n<<","<<(final.tv_sec-start.tv_sec)/double (count)<<endl;
     }
+    GaussPyramid g(p ,n ,2);
+    g.GenerateDoG();
+    g.output();
     return 0;
 }

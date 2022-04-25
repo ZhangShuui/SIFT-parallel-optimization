@@ -114,7 +114,7 @@ void GaussPyramid_n::GaussFilter(int theLayer) {//采用双边滤波
         for (int i = 0; i < S + 3; ++i) {
             float sig=sigma/(i+1);
             for (int i = 0; i < MyLen; ++i) {
-                filter[i] = exp(-(i-len)*(i-len)/(2*sig*sig))/(sigma*sqrt(2*PI));
+                filter[i] = exp(-(i-len)*(i-len)/(2*sig*sig))/(sig*sqrt(2*PI));
             }
             for (int j = 0; j < MyLen; ++j) {
                 for (int k = 0; k < MyLen; ++k) {
@@ -132,7 +132,7 @@ void GaussPyramid_n::GaussFilter(int theLayer) {//采用双边滤波
         for (int i = 0; i < S + 3; ++i) {
             float sig=sigma/(i+1);
             for (int k= 0; k < MyLen; ++k) {
-                filter[k] = exp(-(k-len)*(k-len)/(2*sig*sig))/(sigma*sqrt(2*PI));
+                filter[k] = exp(-(k-len)*(k-len)/(2*sig*sig))/(sig*sqrt(2*PI));
             }
             for (int j = 0; j < MyLen; j+=4) {
                 vf = vld1q_f32(filter+j);
@@ -143,7 +143,7 @@ void GaussPyramid_n::GaussFilter(int theLayer) {//采用双边滤波
                 }
             }
             for (int j = 0; j < MyLen; j++) {
-                filter[j] = exp(-(j-len)*(j-len)/(2*sig*sig))/(sigma*sqrt(2*PI));
+                filter[j] = exp(-(j-len)*(j-len)/(2*sig*sig))/(sig*sqrt(2*PI));
                 vf = vld1q_dup_f32(filter+i);
                 for (int k = 0; k < MyLen; k+=4) {
                     va = vld1q_f32(GaussPy[theLayer][i][k]+j);
