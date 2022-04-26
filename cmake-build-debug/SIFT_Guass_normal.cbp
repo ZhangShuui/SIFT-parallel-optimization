@@ -80,10 +80,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-AVX512xPTHREAD.h">
+			<Option target="SIFT_Guass_normal"/>
+		</Unit>
+		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-AVXxPTHREAD.h">
+			<Option target="SIFT_Guass_normal"/>
+		</Unit>
 		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-NEON.h">
 			<Option target="SIFT_Guass_normal"/>
 		</Unit>
 		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-NEONxPTHREAD.h">
+			<Option target="SIFT_Guass_normal"/>
+		</Unit>
+		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-SSExPTHREAD.h">
 			<Option target="SIFT_Guass_normal"/>
 		</Unit>
 		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-pThread.h">
