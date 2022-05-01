@@ -24,18 +24,38 @@ int main() {
     }
     float total = 0.0;
     int count = 0;
-    n = 8;
-    GaussPyramid_p g(p, n, 2);
+    n = 512;
+
     GaussPyramid_p::THREAD_COUNT = 5;
+    while (n<=MAX){
+        GaussPyramid_p g(p, n, 2);
+        total =0.0;
+        count =0;
+        while (total< 10.0){
+            g.GaussPyInit();
+            gettimeofday(&start, NULL);
+            g.GenerateDoG();
+            gettimeofday(&final, NULL);
+            total += final.tv_sec - start.tv_sec;
+            count++;
+        }
+        std::cout << GaussPyramid_p::THREAD_COUNT << "," << total / float(count) ;
+        total =0.0;
+        count =0;
+        while (total< 10.0){
+            g.GaussPyInit();
+            gettimeofday(&start, NULL);
+            g.GenerateDoG_i();
+            gettimeofday(&final, NULL);
+            total += final.tv_sec - start.tv_sec;
+            count++;
+        }
+        std::cout << "," << total / float(count) << std::endl;
+        n*=2;
+    }
 
-    g.GaussPyInit();
-    gettimeofday(&start, NULL);
-    g.GenerateDoG();
-    gettimeofday(&final, NULL);
-    total += final.tv_sec - start.tv_sec;
-    count++;
 
-    std::cout << GaussPyramid_p::THREAD_COUNT << "," << total / float(count) << std::endl;
+
 
 //
     return 0;

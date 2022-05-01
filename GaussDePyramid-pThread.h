@@ -28,6 +28,7 @@ struct ThreadParam_t {
 
 class GaussPyramid_p {
 public:
+    bool is_initialized;
     static int THREAD_COUNT;
     pthread_barrier_t barrier_Division;
     pthread_barrier_t barrier_Sub;
@@ -68,10 +69,12 @@ int GaussPyramid_p::THREAD_COUNT = 7;
 
 GaussPyramid_p::GaussPyramid_p() {
     data = nullptr;
+    is_initialized = false;
 }
 
 GaussPyramid_p::GaussPyramid_p(int **img, int len, int S) {
     length = len;
+    is_initialized = false;
     data = new int *[len];
     for (int i = 0; i < len; ++i) {
         data[i] = new int[len];
@@ -96,6 +99,7 @@ GaussPyramid_p::GaussPyramid_p(int **img, int len, int S) {
 //初始化高斯金字塔，尚未进行高斯滤波操作
 void GaussPyramid_p::GaussPyInit() {
     int step = 1;
+    if (!is_initialized)
     for (int i = 0; i < layer; ++i) {
         GaussPy[i] = new float **[S + 3];
         for (int j = 0; j < S + 3; ++j) {
@@ -106,6 +110,7 @@ void GaussPyramid_p::GaussPyInit() {
         }
         step *= 2;
     }
+    is_initialized = true;
     int len = length;
     step = 1;
     for (int i = 0; i < layer; ++i) {
