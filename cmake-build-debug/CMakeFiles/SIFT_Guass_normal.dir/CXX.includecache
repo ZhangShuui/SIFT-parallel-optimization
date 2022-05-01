@@ -13,6 +13,8 @@ math.h
 -
 pthread.h
 -
+sys/time.h
+-
 
 C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GuassDePyramid.h
 iostream
