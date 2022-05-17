@@ -26,38 +26,32 @@ int main() {
     float total = 0.0;
     int count = 0;
     n = 8;
-//    while (n<=MAX){
-//        GaussPyramid_omp g(p, n, 2);
-//        total =0.0;
-//        count =0;
-//        while (total< 10.0){
-//            g.GaussPyInit();
-//            gettimeofday(&start, NULL);
-//            g.GenerateDoG();
-//            gettimeofday(&final, NULL);
-//            total += final.tv_sec - start.tv_sec;
-//            count++;
-//        }
-//        float total2 =0.0;
-//        int count2 =0;
-//        while (total< 10.0){
-//            g.GaussPyInit();
-//            gettimeofday(&start, NULL);
-//            g.GenerateDoG();
-//            gettimeofday(&final, NULL);
-//            total2 += final.tv_sec - start.tv_sec;
-//            count2++;
-//        }
-//        std::cout  << total / float(count) <<","<<total2 / float(count2);
-//        n*=2;
-//    }
-//
-    GaussPyramid_omp g_omp(p,n,2);
-    GaussPyramid g(p,n,2);
-    g.GenerateDoG();
-    g_omp.GenerateDoG();
-    g.output();
-    g_omp.output();
-    cout<<"over!"<<endl;
+    while (n<=MAX){
+        GaussPyramid_omp g_omp(p, n, 2);
+        total =0.0;
+        count =0;
+        while (total< 5.0){
+            g_omp.GaussPyInit();
+            gettimeofday(&start, NULL);
+            g_omp.GenerateDoG_omp();
+            gettimeofday(&final, NULL);
+            total += final.tv_sec - start.tv_sec;
+            count++;
+        }
+        float total2 =0.0;
+        int count2 =0;
+        while (total2< 5.0){
+            g_omp.GaussPyInit();
+            gettimeofday(&start, NULL);
+            g_omp.GenerateDoG();
+            gettimeofday(&final, NULL);
+            total2 += final.tv_sec - start.tv_sec;
+            count2++;
+        }
+        std::cout  << total / float(count) <<","<<total2 / float(count2)<<endl;
+        n*=2;
+    }
+
+
     return 0;
 }

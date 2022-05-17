@@ -19,6 +19,7 @@ public:
     void GaussFilter(int theLayer);
     void GenerateDoG();
     ~GaussPyramid();
+    bool initialized;
 protected:
     int length;
     //int width;  先尝试宽度相同的版本
@@ -29,6 +30,7 @@ protected:
 
 GaussPyramid::GaussPyramid() {
     data= nullptr;
+    initialized= false;
 }
 
 GaussPyramid::GaussPyramid(int **img, int len, int S) {
@@ -56,6 +58,7 @@ GaussPyramid::GaussPyramid(int **img, int len, int S) {
 //初始化高斯金字塔，尚未进行高斯滤波操作
 void GaussPyramid::GaussPyInit() {
     int step=1;
+    if (!initialized)
     for (int i = 0; i < layer; ++i) {
         GaussPy[i]=new float**[S+3];
         for (int j = 0; j < S + 3; ++j) {
@@ -66,6 +69,7 @@ void GaussPyramid::GaussPyInit() {
         }
         step*=2;
     }
+        initialized = true;
     int len=length;
     step=1;
     for (int i = 0; i < layer; ++i) {
