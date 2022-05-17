@@ -11,20 +11,20 @@
 				<Option working_dir="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SIFT_Guass_normal">
@@ -34,18 +34,19 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++/backward"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include-fixed"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 SIFT_Guass_normal"/>
-					<CompileFile command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 SIFT_Guass_normal"/>
+					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SIFT_Guass_normal/fast">
@@ -55,28 +56,29 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
-					<Add directory="D:/somethin/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++/backward"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../include"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/include-fixed"/>
+					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/10.3.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 SIFT_Guass_normal/fast"/>
-					<CompileFile command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 SIFT_Guass_normal/fast"/>
+					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/somethin/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
@@ -90,6 +92,9 @@
 			<Option target="SIFT_Guass_normal"/>
 		</Unit>
 		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-NEONxPTHREAD.h">
+			<Option target="SIFT_Guass_normal"/>
+		</Unit>
+		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-OpenMP.h">
 			<Option target="SIFT_Guass_normal"/>
 		</Unit>
 		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-SSExPTHREAD.h">

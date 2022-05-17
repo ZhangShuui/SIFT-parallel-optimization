@@ -68,15 +68,15 @@ include CMakeFiles/SIFT_Guass_normal.dir/flags.make
 CMakeFiles/SIFT_Guass_normal.dir/main.cpp.obj: CMakeFiles/SIFT_Guass_normal.dir/flags.make
 CMakeFiles/SIFT_Guass_normal.dir/main.cpp.obj: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\zsr\CLionProjects\SIFT-Guass-normal\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SIFT_Guass_normal.dir/main.cpp.obj"
-	D:\somethin\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SIFT_Guass_normal.dir\main.cpp.obj -c C:\Users\zsr\CLionProjects\SIFT-Guass-normal\main.cpp
+	C:\TDM-GCC-64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SIFT_Guass_normal.dir\main.cpp.obj -c C:\Users\zsr\CLionProjects\SIFT-Guass-normal\main.cpp
 
 CMakeFiles/SIFT_Guass_normal.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SIFT_Guass_normal.dir/main.cpp.i"
-	D:\somethin\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\zsr\CLionProjects\SIFT-Guass-normal\main.cpp > CMakeFiles\SIFT_Guass_normal.dir\main.cpp.i
+	C:\TDM-GCC-64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\zsr\CLionProjects\SIFT-Guass-normal\main.cpp > CMakeFiles\SIFT_Guass_normal.dir\main.cpp.i
 
 CMakeFiles/SIFT_Guass_normal.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SIFT_Guass_normal.dir/main.cpp.s"
-	D:\somethin\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zsr\CLionProjects\SIFT-Guass-normal\main.cpp -o CMakeFiles\SIFT_Guass_normal.dir\main.cpp.s
+	C:\TDM-GCC-64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\zsr\CLionProjects\SIFT-Guass-normal\main.cpp -o CMakeFiles\SIFT_Guass_normal.dir\main.cpp.s
 
 # Object files for target SIFT_Guass_normal
 SIFT_Guass_normal_OBJECTS = \
