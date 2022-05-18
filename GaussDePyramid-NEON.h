@@ -20,6 +20,7 @@ public:
     void output();
     void GaussFilter(int theLayer);
     void GenerateDoG();
+    void GenerateDoG_n_new();
     ~GaussPyramid_n();
 protected:
     int length;
@@ -211,7 +212,121 @@ GaussPyramid_n::~GaussPyramid_n() {
     }
     delete []GaussPy;
 }
+void GaussPyramid_n::GenerateDoG_n_new() {
+    for (int i = 0; i < S; i++) {
+        int len = length;
 
+        int j = 0;
+
+        while (len) {
+            float *fil = new float[len];
+            float l = float(len - 1) / 2.0;
+            float sig = sigma / (i + 1);
+            if (len <= 2) {
+                {
+
+                    for (int jj = 0; jj < len; ++jj) {
+                        fil[jj] = exp(-(jj - l) * (jj - l) / (2 * sig * sig)) / (sig * sqrt(2 * PI));
+                    }
+
+                    for (int m = 0; m < len; ++m) {
+                        for (int n = 0; n < len; ++n) {
+                            GaussPy[j][i][m][n] *= fil[n];
+                        }
+                    }
+
+                    for (int m = 0; m < len; ++m) {
+                        for (int n = 0; n < len; ++n) {
+                            GaussPy[j][i][m][n] *= fil[m];
+                        }
+                    }
+                }
+
+            } else {
+
+                {
+
+                    for (int jj = 0; jj < len; ++jj) {
+                        fil[jj] = exp(-(jj - l) * (jj - l) / (2 * sig * sig)) / (sig * sqrt(2 * PI));
+
+                        if (fil[jj]){
+                            std::cout<<"zero! but:"<<fil[jj]<<" ";
+                        } else {
+                            std::cout<< "jj="<<jj<<",l="<<l <<",sig="<<sig<<std::endl;
+                            std::cout<<exp(-(jj - l) * (jj - l) / (2 * sig * sig)) / (sig * sqrt(2 * PI))<<std::endl;
+                        }
+                    }
+                    std::cout<<std::endl;
+                    for (int m = 0; m < len; m++) {
+                        float32x4_t vf, va;
+                        for (int n = 0; n < len; n+=4) {
+                            vf = vld1q_f32(fil+n);
+                            va = vld1q_f32(GaussPy[j][i][m]+n);
+                            va = vmulq_f32(va, vf);
+                            vst1q_f32(GaussPy[j][i][m]+n,va);
+//                            GaussPy[j][i][m][n] *= fil[n];
+                        }
+                    }
+
+                    for (int m = 0; m < len; m++) {
+                        float32x4_t vf, va;
+                        vf = vld1q_dup_f32(fil+m);
+                        for (int n = 0; n < len; n+=4) {
+                            va = vld1q_f32(GaussPy[j][i][m]+n);
+                            va = vmulq_f32(va, vf);
+                            vst1q_f32(GaussPy[j][i][m]+n,va);
+//                            GaussPy[j][i][m][n] *= fil[m];
+                        }
+                    }
+                }
+            }
+            {
+                len /= 2;
+                j++;
+                delete[]fil;
+            }
+        }
+    }
+
+
+    int len;
+
+    for (int MyLayer = 0; MyLayer < layer; MyLayer++) {
+
+        {
+            len = length;
+            int k = MyLayer;
+            while (k) {
+                k--;
+                len /= 2;
+            }
+        }
+        if (len<=2){
+
+            for (int i = 0; i < S - 1; ++i) {
+                for (int j = 0; j < len; ++j) {
+                    for (int l = 0; l < len; ++l) {
+                        GaussPy[MyLayer][i][j][l] -= GaussPy[MyLayer][i + 1][j][l];
+                    }
+                }
+            }
+        } else {
+
+            for (int i = 0; i < S - 1; ++i) {
+                float32x4_t va, vb;
+                for (int j = 0; j < len; ++j) {
+                    for (int l = 0; l < len; l+=4) {
+                        va = vld1q_f32(GaussPy[MyLayer][i][j]+l);
+                        vb = vld1q_f32(GaussPy[MyLayer][i+1][j]+l);
+                        va = vsubq_f32(va,vb);
+                        vst1q_f32(GaussPy[MyLayer][i][j]+l,va);
+//                        GaussPy[MyLayer][i][j][l] -= GaussPy[MyLayer][i + 1][j][l];
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 
