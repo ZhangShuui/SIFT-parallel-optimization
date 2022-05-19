@@ -27,9 +27,9 @@ int main() {
     }
     float total = 0.0;
     int count = 0;
-    n = 128;
+    n = 8;
     int k = 1;
-    while (n<=16384){
+    while (n<=8192){
         GaussPyramid_nomp g_omp(p, n, 2);
         GaussPyramid_omp g(p,n,2);
         total =0.0;
@@ -57,17 +57,17 @@ int main() {
         n*=2;
 //        k++;
     }
-//    GaussPyramid_nomp g(p,8,2);
+//    GaussPyramid_omp g(p,8,2);
 //    g.GaussPyInit();
-//    g.GenerateDoG_nomp_dynamic();
+//    g.GenerateDoG_omp();
 //    g.output();
 //    GaussPyramid gg(p,8,2);
 //    gg.GaussPyInit();
 //    gg.GenerateDoG();
 //    gg.output();
-//    GaussPyramid_nomp g(p,8,2);
-//    g.GaussPyInit();
-//    g.GenerateDoG_nomp_dynamic();
-//    g.output();
+//    GaussPyramid_nomp ggg(p,8,2);
+//    ggg.GaussPyInit();
+//    ggg.GenerateDoG_nomp_dynamic();
+//    ggg.output();
     return 0;
 }

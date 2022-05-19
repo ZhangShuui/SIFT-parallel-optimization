@@ -66,6 +66,7 @@ GaussPyramid_omp::GaussPyramid_omp(int **img, int len, int S) {
     length = len;
     is_initialized = false;
     thread_count = 4;
+    chunk_size = 5;
     data = new int *[len];
     for (int i = 0; i < len; ++i) {
         data[i] = new int[len];
@@ -215,12 +216,13 @@ GaussPyramid_omp::~GaussPyramid_omp() {
 }
 
 void GaussPyramid_omp::GenerateDoG_omp() {
+    float fil[length];
     for (int i = 0; i < S; i++) {
         int len = length;
         int k = i;
         int j = 0;
         while (len) {
-            float *fil = new float[len];
+
             float l = float(len - 1) / 2.0;
             float sig = sigma / (i + 1);
 #pragma omp parallel num_threads(thread_count)
@@ -245,12 +247,11 @@ void GaussPyramid_omp::GenerateDoG_omp() {
                 {
                     len /= 2;
                     j++;
-                    delete[]fil;
+
                 }
             }
 
         }
-
     }
     int len;
 #pragma omp parallel num_threads(thread_count)
@@ -280,11 +281,12 @@ void GaussPyramid_omp::GenerateDoG_omp_dynamic() {
         int len = length;
         int k = i;
         int j = 0;
+        float *fil = new float[len];
         while (len) {
-            float *fil = new float[len];
+
             float l = float(len - 1) / 2.0;
             float sig = sigma / (i + 1);
-#pragma omp parallel num_threads(thread_count)
+#pragma omp parallel num_threads(thread_count) private(fil)
             {
 #pragma omp for schedule(dynamic,chunk_size)
                 for (int jj = 0; jj < len; ++jj) {
@@ -306,12 +308,12 @@ void GaussPyramid_omp::GenerateDoG_omp_dynamic() {
                 {
                     len /= 2;
                     j++;
-                    delete[]fil;
+
                 }
             }
 
         }
-
+        delete[]fil;
     }
     int len;
 #pragma omp parallel num_threads(thread_count)
@@ -325,7 +327,7 @@ void GaussPyramid_omp::GenerateDoG_omp_dynamic() {
                 len /= 2;
             }
         }
-#pragma omp for schedule(dynamic)
+#pragma omp for schedule(dynamic,chunk_size)
         for (int i = 0; i < S - 1; ++i) {
             for (int j = 0; j < len; ++j) {
                 for (int l = 0; l < len; ++l) {

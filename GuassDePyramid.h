@@ -51,6 +51,7 @@ GaussPyramid::GaussPyramid(int **img, int len, int S) {
         len/=2;
     }
     layer=x;
+    initialized = false;
     GaussPy=new float***[layer];
     filter=new float[length];
     GaussPyInit();

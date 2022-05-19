@@ -11,7 +11,7 @@
 #include <arm_neon.h>
 #include <omp.h>
 
-const int thread_count = 4;
+const int thread_count = 2;
 
 class GaussPyramid_nomp {
 public:
@@ -36,6 +36,7 @@ public:
 
     ~GaussPyramid_nomp();
 
+    bool initialized;
 protected:
     int length;
     //int width;  先尝试宽度相同的版本
@@ -66,6 +67,7 @@ GaussPyramid_nomp::GaussPyramid_nomp(int **img, int len, int S) {
         x++;
         len /= 2;
     }
+    initialized = false;
     layer = x;
     GaussPy = new float ***[layer];
     filter = new float[length];
@@ -75,6 +77,7 @@ GaussPyramid_nomp::GaussPyramid_nomp(int **img, int len, int S) {
 //初始化高斯金字塔，尚未进行高斯滤波操作
 void GaussPyramid_nomp::GaussPyInit() {
     int step = 1;
+    if(!initialized)
     for (int i = 0; i < layer; ++i) {
         GaussPy[i] = new float **[S + 3];
         for (int j = 0; j < S + 3; ++j) {
@@ -85,6 +88,7 @@ void GaussPyramid_nomp::GaussPyInit() {
         }
         step *= 2;
     }
+    initialized = true;
     int len = length;
     step = 1;
     for (int i = 0; i < layer; ++i) {
@@ -230,14 +234,16 @@ GaussPyramid_nomp::~GaussPyramid_nomp() {
 }
 
 void GaussPyramid_nomp::GenerateDoG_nomp_dynamic() {
+    float fil[length];
     for (int i = 0; i < S; i++) {
         int len = length;
         int k = i;
         int j = 0;
+        float32x4_t vf, va;
 
         while (len) {
             if (len <= 2) {
-                float *fil = new float[len];
+
                 float l = float(len - 1) / 2.0;
                 float sig = sigma / (i + 1);
 #pragma omp parallel num_threads(thread_count)
@@ -262,16 +268,14 @@ void GaussPyramid_nomp::GenerateDoG_nomp_dynamic() {
                     {
                         len /= 2;
                         j++;
-                        delete[]fil;
                     }
                 }
-
             } else {
                 float *fil = new float[len];
                 float l = float(len - 1) / 2.0;
                 float sig = sigma / (i + 1);
 
-#pragma omp parallel num_threads(thread_count)
+#pragma omp parallel num_threads(thread_count) private(vf, va)
                 {
 #pragma omp for
                     for (int jj = 0; jj < len; ++jj) {
@@ -279,8 +283,8 @@ void GaussPyramid_nomp::GenerateDoG_nomp_dynamic() {
                     }
 #pragma omp for
                     for (int m = 0; m < len; m++) {
-                        float32x4_t vf, va;
                         for (int n = 0; n < len; n += 4) {
+//                            float32x4_t vf, va;
                             vf = vld1q_f32(fil + n);
                             va = vld1q_f32(GaussPy[j][i][m] + n);
                             va = vmulq_f32(va, vf);
@@ -290,7 +294,7 @@ void GaussPyramid_nomp::GenerateDoG_nomp_dynamic() {
                     }
 #pragma omp for
                     for (int m = 0; m < len; m++) {
-                        float32x4_t vf, va;
+//                        float32x4_t vf, va;
                         vf = vld1q_dup_f32(fil + m);
                         for (int n = 0; n < len; n += 4) {
                             va = vld1q_f32(GaussPy[j][i][m] + n);
@@ -303,17 +307,16 @@ void GaussPyramid_nomp::GenerateDoG_nomp_dynamic() {
                     {
                         len /= 2;
                         j++;
-                        delete[]fil;
+
                     }
                 }
             }
         }
     }
-
-
     int len;
-
+    float32x4_t va, vb;
     for (int MyLayer = 0; MyLayer < layer; MyLayer++) {
+
 #pragma omp parallel num_threads(thread_count)
         {
 #pragma omp single
@@ -337,7 +340,7 @@ void GaussPyramid_nomp::GenerateDoG_nomp_dynamic() {
             } else {
 #pragma omp for
                 for (int i = 0; i < S - 1; ++i) {
-                    float32x4_t va, vb;
+//                    float32x4_t va, vb;
                     for (int j = 0; j < len; ++j) {
                         for (int l = 0; l < len; l += 4) {
                             va = vld1q_f32(GaussPy[MyLayer][i][j] + l);

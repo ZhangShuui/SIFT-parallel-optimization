@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-OpenMP.h
+omp.h
+-
+GuassDePyramid.h
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GuassDePyramid.h
+iostream
+-
+math.h
+-
+
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GuassDePyramid.h
+iostream
+-
+math.h
+-
+
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/main.cpp
+iostream
+-
+GuassDePyramid.h
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GuassDePyramid.h
+GaussDePyramid-OpenMP.h
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-OpenMP.h
+vector
+-
+sys/time.h
+-
+
