@@ -82,7 +82,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-AVX512xOpenMP.h">
+			<Option target="SIFT_Guass_normal"/>
+		</Unit>
 		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-AVX512xPTHREAD.h">
+			<Option target="SIFT_Guass_normal"/>
+		</Unit>
+		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-AVXxOpenMP.h">
 			<Option target="SIFT_Guass_normal"/>
 		</Unit>
 		<Unit filename="C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-AVXxPTHREAD.h">

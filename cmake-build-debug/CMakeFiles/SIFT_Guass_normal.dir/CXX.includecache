@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-AVXxOpenMP.h
+iostream
+-
+math.h
+-
+immintrin.h
+-
+omp.h
+-
+
 C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-OpenMP.h
 omp.h
 -
@@ -27,6 +37,8 @@ iostream
 -
 GuassDePyramid.h
 C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GuassDePyramid.h
+GaussDePyramid-AVXxOpenMP.h
+C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-AVXxOpenMP.h
 GaussDePyramid-OpenMP.h
 C:/Users/zsr/CLionProjects/SIFT-Guass-normal/GaussDePyramid-OpenMP.h
 vector
