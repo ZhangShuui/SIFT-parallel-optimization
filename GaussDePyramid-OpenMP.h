@@ -42,6 +42,8 @@ public:
 
     void GenerateDoG_omp_dynamic();
 
+    void GenerateDoG_omp_guided();
+
     ~GaussPyramid_omp();
 
     int thread_count;
@@ -65,7 +67,7 @@ GaussPyramid_omp::GaussPyramid_omp() {
 GaussPyramid_omp::GaussPyramid_omp(int **img, int len, int S) {
     length = len;
     is_initialized = false;
-    thread_count = 4;
+    thread_count = 8;
     chunk_size = 5;
     data = new int *[len];
     for (int i = 0; i < len; ++i) {
@@ -328,6 +330,67 @@ void GaussPyramid_omp::GenerateDoG_omp_dynamic() {
             }
         }
 #pragma omp for schedule(dynamic,chunk_size)
+        for (int i = 0; i < S - 1; ++i) {
+            for (int j = 0; j < len; ++j) {
+                for (int l = 0; l < len; ++l) {
+                    GaussPy[MyLayer][i][j][l] -= GaussPy[MyLayer][i + 1][j][l];
+                }
+            }
+        }
+    }
+}
+
+void GaussPyramid_omp::GenerateDoG_omp_guided() {
+    float fil[length];
+    for (int i = 0; i < S; i++) {
+        int len = length;
+        int k = i;
+        int j = 0;
+        while (len) {
+
+            float l = float(len - 1) / 2.0;
+            float sig = sigma / (i + 1);
+#pragma omp parallel num_threads(thread_count)
+            {
+#pragma omp for schedule(guided,chunk_size)
+                for (int jj = 0; jj < len; ++jj) {
+                    fil[jj] = exp(-(jj - l) * (jj - l) / (2 * sig * sig)) / (sig * sqrt(2 * PI));
+                }
+#pragma omp for schedule(guided,chunk_size)
+                for (int m = 0; m < len; ++m) {
+                    for (int n = 0; n < len; ++n) {
+                        GaussPy[j][i][m][n] *= fil[n];
+                    }
+                }
+#pragma omp for schedule(guided,chunk_size)
+                for (int m = 0; m < len; ++m) {
+                    for (int n = 0; n < len; ++n) {
+                        GaussPy[j][i][m][n] *= fil[m];
+                    }
+                }
+#pragma omp single
+                {
+                    len /= 2;
+                    j++;
+
+                }
+            }
+
+        }
+    }
+    int len;
+#pragma omp parallel num_threads(thread_count)
+    for (int MyLayer = 0; MyLayer < layer; MyLayer++) {
+#pragma omp single
+        {
+            len = length;
+            int k = MyLayer;
+            while (k) {
+                k--;
+                len /= 2;
+            }
+        }
+#pragma omp for schedule(guided,chunk_size)
         for (int i = 0; i < S - 1; ++i) {
             for (int j = 0; j < len; ++j) {
                 for (int l = 0; l < len; ++l) {

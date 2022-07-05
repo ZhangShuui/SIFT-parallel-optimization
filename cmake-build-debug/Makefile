@@ -152,6 +152,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SIFT_Guass_normal.dir\build.make CMakeFiles/SIFT_Guass_normal.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+mpitest.obj: mpitest.cpp.obj
+.PHONY : mpitest.obj
+
+# target to build an object file
+mpitest.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SIFT_Guass_normal.dir\build.make CMakeFiles/SIFT_Guass_normal.dir/mpitest.cpp.obj
+.PHONY : mpitest.cpp.obj
+
+mpitest.i: mpitest.cpp.i
+.PHONY : mpitest.i
+
+# target to preprocess a source file
+mpitest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SIFT_Guass_normal.dir\build.make CMakeFiles/SIFT_Guass_normal.dir/mpitest.cpp.i
+.PHONY : mpitest.cpp.i
+
+mpitest.s: mpitest.cpp.s
+.PHONY : mpitest.s
+
+# target to generate assembly for a file
+mpitest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SIFT_Guass_normal.dir\build.make CMakeFiles/SIFT_Guass_normal.dir/mpitest.cpp.s
+.PHONY : mpitest.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -164,6 +188,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... mpitest.obj
+	@echo ... mpitest.i
+	@echo ... mpitest.s
 .PHONY : help
 
 

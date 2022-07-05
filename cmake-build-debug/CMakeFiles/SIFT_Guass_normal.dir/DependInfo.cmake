@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/zsr/CLionProjects/SIFT-Guass-normal/main.cpp" "C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/CMakeFiles/SIFT_Guass_normal.dir/main.cpp.obj"
+  "C:/Users/zsr/CLionProjects/SIFT-Guass-normal/mpitest.cpp" "C:/Users/zsr/CLionProjects/SIFT-Guass-normal/cmake-build-debug/CMakeFiles/SIFT_Guass_normal.dir/mpitest.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/SIFT_Guass_normal.dir/main.cpp.obj"
+  "CMakeFiles/SIFT_Guass_normal.dir/mpitest.cpp.obj"
   "SIFT_Guass_normal.exe"
   "SIFT_Guass_normal.exe.manifest"
   "SIFT_Guass_normal.pdb"

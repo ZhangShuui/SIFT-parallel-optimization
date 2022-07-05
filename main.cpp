@@ -1,23 +1,29 @@
 #include <iostream>
 #include "GuassDePyramid.h"
+#include "GaussDePyramid-MPI.h"
+
 //#include "GaussDePyramid-NEON.h"
-#include "GaussDePyramid-AVXxOpenMP.h"
-#include "GaussDePyramid-OpenMP.h"
-#include "GaussDePyramid-AVX512xOpenMP.h"
+//#include "GaussDePyramid-AVXxOpenMP.h"
+//#include "GaussDePyramid-OpenMP.h"
+//#include "GaussDePyramid-AVX512xOpenMP.h"
 //#include "GaussDePyramid-NEONxOpenMP.h"
-#include <vector>
 //#include "GaussDePyramid-SSExPTHREAD.h"
 //#include "GaussDePyramid-AVX512xPTHREAD.h"
 //#include "GaussDePyramid-NEON.h"
 //#include "GaussDePyramid-NEONxPTHREAD.h"
-#include <sys/time.h>
+
 
 using namespace std;
-timeval start,final;
-const int MAX = 4096;
-int n = 8;
-vector<int> aaaaa;
-int main() {
+//timeval start,final;
+const int MAX = 1024;
+int n = 512;
+
+
+
+
+
+
+int main(int argc,char* argv[]) {
     int **p = new int *[MAX];
     for (int i = 0; i < MAX; ++i) {
         p[i] = new int[MAX];
@@ -27,69 +33,44 @@ int main() {
             p[i][j] = 1;
         }
     }
-    float total = 0.0;
-    int count = 0;
-    float total2 =0.0;
-    int count2 =0;
-    float total3 =0.0;
-    int count3 =0;
-    n = 8;
-    int k = 1;
-    while (n<=4096){
-        GaussPyramid_aomp g_omp(p, n, 2);
-        GaussPyramid_omp g(p,n,2);
-        GaussPyramid_a512omp ga(p,n,2);
-        total =0.0;
-        count =0;
-        while (total< 6.0){
-            g_omp.GaussPyInit();
-            gettimeofday(&start, NULL);
-            g_omp.GenerateDoG_nomp_dynamic();
-            gettimeofday(&final, NULL);
-            total += final.tv_sec - start.tv_sec;
-            count++;
-        }
-
-        total2 =0.0;
-        count2 =0;
-        while (total2< 6.0){
-            g.GaussPyInit();
-            gettimeofday(&start, NULL);
-            g.GenerateDoG_omp();
-            gettimeofday(&final, NULL);
-            total2 += final.tv_sec - start.tv_sec;
-            count2++;
-        }
-
-        total3 =0.0;
-        count3 =0;
-        while (total3< 6.0){
-            ga.GaussPyInit();
-            gettimeofday(&start, NULL);
-            ga.GenerateDoG_nomp_dynamic();
-            gettimeofday(&final, NULL);
-            total3 += final.tv_sec - start.tv_sec;
-            count3++;
-        }
-        std::cout <<n<<","<<total2 / float(count2)<<","  << total / float(count) <<","<<total3 / float(count3)<<endl;
-        n*=2;
+//    float total = 0.0;
+//    int count = 0;
+//    float total2 =0.0;
+//    int count2 =0;
+//    float total3 =0.0;
+//    int count3 =0;
+//    n = 8;
+//    int k = 15;
+//    while (k <= 25){
+//        g.chunk_size = k;
+//        total2 =0.0;
+//        count2 =0;
+//        while (total2< 6.0){
+//            g.GaussPyInit();
+//            gettimeofday(&start, NULL);
+//            g.GenerateDoG_omp_dynamic();
+//            gettimeofday(&final, NULL);
+//            total2 += final.tv_sec - start.tv_sec;
+//            count2++;
+//        }
+//        cout<<k<<","<<total2/float (count2)<<endl;
+////        n*=2;
 //        k++;
+//    }
+    int times=0;
+    GaussPyramid_mpi g(p,n,2);
+    std::chrono::duration<double, std::milli> elapsed{};
+    auto start= std::chrono::high_resolution_clock::now();
+    auto end = std::chrono::high_resolution_clock::now();
+    elapsed +=end-start;
+    while(elapsed.count()<100){
+        start= std::chrono::high_resolution_clock::now();
+        g.GenerateDoG_mpi(argc,argv);
+        end = std::chrono::high_resolution_clock::now();
+        elapsed += end-start;
+
+        times+=1;
     }
-//    GaussPyramid_omp g(p,16,2);
-//    g.GaussPyInit();
-//    g.GenerateDoG_omp();
-//    g.output();
-//    GaussPyramid gg(p,8,2);
-//    gg.GaussPyInit();
-//    gg.GenerateDoG();
-//    gg.output();
-//    GaussPyramid_aomp ggg(p,8,2);
-//    ggg.GaussPyInit();
-//    ggg.GenerateDoG_nomp_dynamic();
-//    ggg.output();
-//    GaussPyramid_a512omp ggg(p,16,2);
-//    ggg.GaussPyInit();
-//    ggg.GenerateDoG_nomp_dynamic();
-//    ggg.output();
+    cout<<float (elapsed.count())/ float (times)<<endl;
     return 0;
 }
